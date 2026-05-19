@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Manajemen Mahasiswa</title>
+
+<style>
+
+/* =========================
+   BODY / BACKGROUND
+========================= */
+body {
+
+    font-family: Arial, sans-serif;
+
+    background-image:
+        linear-gradient(
+            rgba(28, 69, 150, 0.85),
+            rgba(255, 255, 255, 0.925)
+        ),
+        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6SSpd4fswlRs-0z4X4Mkz2lQ5n7ELoKY1EQ&s');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    margin: 0;
+    padding: 20px;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+
+    max-width: 700px;
+    margin: auto;
+
+    background: rgb(48, 165, 197);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+
+    background: linear-gradient(
+        135deg,
+        #0072ff,
+        #0056d6
+    );
+
+    color: white;
+
+    padding: 20px;
+
+    text-align: center;
+
+    font-size: 30px;
+
+    font-weight: bold;
+}
+
+/* =========================
+   FORM
+========================= */
+.form-content {
+
+    padding: 25px;
+}
+
+/* =========================
+   INPUT
+========================= */
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 5px;
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+
+    border: 1px solid #ccc;
+
+    font-size: 16px;
+
+    box-sizing: border-box;
+}
+
+/* =========================
+   ROW
+========================= */
+.row {
+
+    display: flex;
+
+    gap: 15px;
+}
+
+.row > * {
+
+    flex: 1;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.button-group {
+
+    text-align: center;
+}
+
+button {
+
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    color: rgb(0, 0, 0);
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    margin: 5px;
+}
+
+/* BUTTON INPUT */
+.submit {
+
+    background: #00c853;
+}
+
+/* BUTTON RESET */
+.reset {
+
+    background: #ff3d3d;
+}
+
+/* BUTTON EDIT */
+.edit {
+
+    background: orange;
+
+    padding: 7px 12px;
+}
+
+/* BUTTON HAPUS */
+.hapus {
+
+    background: red;
+
+    padding: 7px 12px;
+}
+
+/* =========================
+   TABLE
+========================= */
+.table-container {
+
+    max-width: 700px;
+
+    margin: 25px auto;
+
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* HEADER TABLE */
+.table-header {
+
+    background: linear-gradient(
+        135deg,
+        #0072ff,
+        #0056d6
+    );
+
+    color: white;
+
+    padding: 20px;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    text-align: center;
+}
+
+/* TABLE */
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th,
+td {
+
+    padding: 15px;
+
+    text-align: center;
+
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+
+    background: #f3f6ff;
+}
+
+/* HOVER */
+tbody tr:hover {
+
+    background: #f5f5f5;
+}
+
+/* =========================
+   WARNA LINK URL
+========================= */
+a {
+
+    color: blue;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+a:hover {
+
+    color: red;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+.dark-mode {
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,0.9),
+            rgba(20,20,20,0.95)
+        ),
+        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6SSpd4fswlRs-0z4X4Mkz2lQ5n7ELoKY1EQ&s');
+}
+
+.dark-mode .container,
+.dark-mode .table-container {
+
+    background: #1e1e1e;
+
+    color: white;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+
+    background: #2d2d2d;
+
+    color: white;
+
+    border: 1px solid #555;
+}
+
+.dark-mode table {
+
+    color: white;
+}
+
+.dark-mode th {
+
+    background: #333;
+}
+
+.dark-mode tbody tr:hover {
+
+    background: #2c2c2c;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:700px) {
+
+    .row {
+
+        flex-direction: column;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        📋 Manajemen Mahasiswa
+    </div>
+
+    <center style="padding-top:15px;">
+
+        <a href="https://stitek.ac.id"
+           target="_blank">
+
+            Website STITEK
+
+        </a>
+
+    </center>
+
+    <div class="form-content">
+
+        <form>
+
+            <div class="row">
+
+                <input
+                    type="text"
+                    placeholder="NIM"
+                    required>
+
+                <input
+                    type="text"
+                    placeholder="Nama Lengkap"
+                    required>
+
+            </div>
+
+            <textarea placeholder="Alamat"></textarea>
+
+            <div class="row">
+
+                <select required>
+
+                    <option value="">
+                        Jenis Kelamin
+                    </option>
+
+                    <option>
+                        Pria
+                    </option>
+
+                    <option>
+                        Wanita
+                    </option>
+
+                </select>
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    required>
+
+            </div>
+
+            <div class="row">
+
+                <select id="tanggal">
+
+                    <option>
+                        Tanggal
+                    </option>
+
+                </select>
+
+                <select id="bulan">
+
+                    <option>
+                        Bulan
+                    </option>
+
+                    <option>Januari</option>
+                    <option>Februari</option>
+                    <option>Maret</option>
+                    <option>April</option>
+                    <option>Mei</option>
+                    <option>Juni</option>
+                    <option>Juli</option>
+                    <option>Agustus</option>
+                    <option>September</option>
+                    <option>Oktober</option>
+                    <option>November</option>
+                    <option>Desember</option>
+
+                </select>
+
+                <select id="tahun">
+
+                    <option>
+                        Tahun
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="button-group">
+
+                <button class="submit">
+
+                    + Input Data
+
+                </button>
+
+                <button
+                    type="reset"
+                    class="reset">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div class="table-container">
+
+    <div class="table-header">
+
+        📚 Data Mahasiswa
+
+        <div style="margin-top:15px;">
+
+            <button id="toggleMode">
+
+                🌙 Dark Mode
+
+            </button>
+
+            <input
+                type="text"
+                id="filterData"
+                placeholder="Cari NIM / Nama..."
+                style="
+                    width:250px;
+                    padding:10px;
+                    border-radius:10px;
+                    border:none;
+                    margin-left:10px;
+                ">
+
+        </div>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>No</th>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>JK</th>
+                <th>Tgl Lahir</th>
+                <th>Aksi</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+    <!-- PAGINATION -->
+    <div
+        id="pagination"
+        style="
+            text-align:center;
+            margin-top:20px;
+            padding-bottom:20px;
+        ">
+    </div>
+
+</div>
+
+<script>
+
+const form =
+document.querySelector("form");
+
+const tbody =
+document.querySelector("tbody");
+
+const tanggalEl =
+document.getElementById("tanggal");
+
+const bulanEl =
+document.getElementById("bulan");
+
+const tahunEl =
+document.getElementById("tahun");
+
+const pagination =
+document.getElementById("pagination");
+
+let currentPage = 1;
+
+const dataPerPage = 5;
+
+for(let i = 1; i <= 31; i++) {
+
+    let opt =
+    document.createElement("option");
+
+    opt.value = i;
+
+    opt.textContent = i;
+
+    tanggalEl.appendChild(opt);
+}
+
+for(let i = 2000; i <= 2030; i++) {
+
+    let opt =
+    document.createElement("option");
+
+    opt.value = i;
+
+    opt.textContent = i;
+
+    tahunEl.appendChild(opt);
+}
+
+let dataMahasiswa =
+JSON.parse(localStorage.getItem("data"))
+|| [];
+
+function tampilkanData() {
+
+    tbody.innerHTML = "";
+
+    if(dataMahasiswa.length === 0) {
+
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="6">
+                Belum ada data
+            </td>
+        </tr>
+        `;
+
+        pagination.innerHTML = "";
+
+        return;
+    }
+
+    const start =
+    (currentPage - 1) * dataPerPage;
+
+    const end =
+    start + dataPerPage;
+
+    const dataTampil =
+    dataMahasiswa.slice(start, end);
+
+    dataTampil.forEach((mhs, index) => {
+
+        const row = `
+        <tr>
+
+            <td>${start + index + 1}</td>
+
+            <td>${mhs.nim}</td>
+
+            <td>${mhs.nama}</td>
+
+            <td>${mhs.jk}</td>
+
+            <td>${mhs.tgl}</td>
+
+            <td>
+
+                <button
+                    class="edit"
+                    onclick="editData(${start + index})">
+
+                    ✏️
+
+                </button>
+
+                <button
+                    class="hapus"
+                    onclick="hapusData(${start + index})">
+
+                    🗑️
+
+                </button>
+
+            </td>
+
+        </tr>
+        `;
+
+        tbody.innerHTML += row;
+    });
+
+    tampilkanPagination();
+}
+
+function tampilkanPagination() {
+
+    pagination.innerHTML = "";
+
+    const totalPage =
+    Math.ceil(
+        dataMahasiswa.length /
+        dataPerPage
+    );
+
+    for(let i = 1; i <= totalPage; i++) {
+
+        pagination.innerHTML += `
+        <button onclick="gantiHalaman(${i})">
+            ${i}
+        </button>
+        `;
+    }
+}
+
+function gantiHalaman(page) {
+
+    currentPage = page;
+
+    tampilkanData();
+}
+
+function hapusData(index) {
+
+    dataMahasiswa.splice(index, 1);
+
+    localStorage.setItem(
+        "data",
+        JSON.stringify(dataMahasiswa)
+    );
+
+    tampilkanData();
+}
+
+function editData(index) {
+
+    const mhs =
+    dataMahasiswa[index];
+
+    form.querySelectorAll("input")[0].value =
+    mhs.nim;
+
+    form.querySelectorAll("input")[1].value =
+    mhs.nama;
+
+    form.querySelector("select").value =
+    mhs.jk;
+
+    const splitTgl =
+    mhs.tgl.split(" ");
+
+    tanggalEl.value =
+    splitTgl[0];
+
+    bulanEl.value =
+    splitTgl[1];
+
+    tahunEl.value =
+    splitTgl[2];
+
+    dataMahasiswa.splice(index, 1);
+
+    localStorage.setItem(
+        "data",
+        JSON.stringify(dataMahasiswa)
+    );
+
+    tampilkanData();
+}
+
+tampilkanData();
+
+form.addEventListener(
+    "submit",
+    function(e) {
+
+    e.preventDefault();
+
+    const nim =
+    form.querySelectorAll("input")[0].value;
+
+    const nama =
+    form.querySelectorAll("input")[1].value;
+
+    const jk =
+    form.querySelector("select").value;
+
+    const tgl =
+    tanggalEl.value + " " +
+    bulanEl.value + " " +
+    tahunEl.value;
+
+    const mahasiswa = {
+
+        nim,
+        nama,
+        jk,
+        tgl
+    };
+
+    dataMahasiswa.push(mahasiswa);
+
+    localStorage.setItem(
+        "data",
+        JSON.stringify(dataMahasiswa)
+    );
+
+    tampilkanData();
+
+    form.reset();
+});
+
+const toggleMode =
+document.getElementById("toggleMode");
+
+toggleMode.addEventListener(
+    "click",
+    function() {
+
+    document.body.classList.toggle(
+        "dark-mode"
+    );
+
+    if(
+        document.body.classList.contains(
+            "dark-mode"
+        )
+    ) {
+
+        toggleMode.innerHTML =
+        "☀️ Light Mode";
+
+    } else {
+
+        toggleMode.innerHTML =
+        "🌙 Dark Mode";
+    }
+});
+
+const filterData =
+document.getElementById("filterData");
+
+filterData.addEventListener(
+    "keyup",
+    function() {
+
+    const keyword =
+    this.value.toLowerCase();
+
+    const rows =
+    tbody.querySelectorAll("tr");
+
+    rows.forEach((row) => {
+
+        const text =
+        row.textContent.toLowerCase();
+
+        if(text.includes(keyword)) {
+
+            row.style.display = "";
+
+        } else {
+
+            row.style.display = "none";
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
